@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\ApiResponses;
-use App\Http\Requests\ApiLoginRequest;
+use App\Http\Requests\Api\LoginUserRequest;
 
 class AuthController extends Controller
 {
     use ApiResponses;
 
-    public function login(ApiLoginRequest $request) {
+    public function login(LoginUserRequest $request) {
         return $this->ok($request->get('email'));
     }
 
