@@ -1,19 +1,13 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-// localhost:8000/api/v1
+Route::prefix('v1')->group(__DIR__ . '/api_v1.php');
 
 Route::post('/login', [AuthController::class, 'login']);
-
 Route::post('/register', [AuthController::class, 'register']);
-
-Route::get('/tickets', function() {
-    return Ticket::all();
-});
 
 Route::get('/user', function (Request $request) {
     return $request->user();
