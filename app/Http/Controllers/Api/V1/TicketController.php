@@ -14,15 +14,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return Ticket::all();
     }
 
     /**
@@ -37,14 +29,6 @@ class TicketController extends Controller
      * Display the specified resource.
      */
     public function show(Ticket $ticket)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Ticket $ticket)
     {
         //
     }
