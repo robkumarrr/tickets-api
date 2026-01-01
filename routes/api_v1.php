@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 // localhost:8000/api/v1
 
-Route::apiResource('tickets', TicketController::class);
+Route::middleware('auth:sanctum')->apiResource('tickets', TicketController::class);
 
 Route::get('/user', function (Request $request) {
     return $request->user();
