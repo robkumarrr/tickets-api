@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\Api\V1\TicketController;
+use App\Http\Controllers\Api\V1\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // localhost:8000/api/v1
 
 Route::middleware('auth:sanctum')->apiResource('tickets', TicketController::class);
+Route::middleware('auth:sanctum')->apiResource('users', UsersController::class);
 
 Route::get('/user', function (Request $request) {
     return $request->user();
