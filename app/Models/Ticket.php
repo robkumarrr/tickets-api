@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Filters\V1\QueryFilter;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,7 +19,9 @@ class Ticket extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function scopeFilter(Builder $builder, QueryFilter $filters) {
+    #[Scope]
+    public function filter(Builder $builder, QueryFilter $filters): Builder
+    {
         return $filters->apply($builder);
     }
 }

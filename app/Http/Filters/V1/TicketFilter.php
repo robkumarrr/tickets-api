@@ -2,13 +2,16 @@
 
 namespace App\Http\Filters\V1;
 
+use Illuminate\Database\Eloquent\Builder;
+
 class TicketFilter extends QueryFilter
 {
-    public function include($value) {
+    public function include($value): Builder
+    {
         return $this->builder->with($value);
     }
 
-    public function createdAt($value) {
+    public function createdAt($value): Builder {
         $dates = explode(',', $value);
 
         if (count($dates) > 1) {
@@ -18,7 +21,7 @@ class TicketFilter extends QueryFilter
         return $this->builder->whereDate('created_at', $value);
     }
 
-    public function updatedAt($value) {
+    public function updatedAt($value): Builder {
         $dates = explode(',', $value);
 
         if (count($dates) > 1) {
@@ -28,7 +31,7 @@ class TicketFilter extends QueryFilter
         return $this->builder->whereDate('updated_at', $value);
     }
 
-    public function status($value) {
+    public function status($value): Builder {
         return $this->builder->whereIn('status', explode(',', $value));
     }
 
