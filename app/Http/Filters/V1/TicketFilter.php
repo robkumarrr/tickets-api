@@ -35,7 +35,7 @@ class TicketFilter extends QueryFilter
         return $this->builder->whereIn('status', explode(',', $value));
     }
 
-    public function title($value) {
+    public function title($value): Builder {
         $likeStr = str_replace('*', '%', $value);
         return $this->builder->where('title', 'like', $likeStr);
     }
