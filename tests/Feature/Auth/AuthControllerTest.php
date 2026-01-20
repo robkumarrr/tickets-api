@@ -14,8 +14,6 @@ it("checks if returning success from api/login", function () {
 
 it('checks if the api authentication is working on api/login', function() {
 
-//    Http::fake()->withMiddleware();
-
     $this->post('api/login')
         ->assertStatus(200)
         ->assertJsonStructure([
