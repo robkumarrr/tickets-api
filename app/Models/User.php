@@ -57,7 +57,7 @@ class User extends Authenticatable
     }
 
     #[Scope]
-    public function filter(Builder $builder, QueryFilter $filters) : Builder
+    protected function filter(Builder $builder, QueryFilter $filters): Builder
     {
         return $filters->apply($builder);
     }

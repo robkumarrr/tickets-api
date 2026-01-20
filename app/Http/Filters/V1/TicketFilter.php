@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Builder;
 
 class TicketFilter extends QueryFilter
 {
+    protected array $sortable = [
+        'title',
+        'status',
+        'createdAt' => 'created_at',
+        'updatedAt' => 'updated_at'
+    ];
+
     public function include($value): Builder
     {
         return $this->builder->with($value);

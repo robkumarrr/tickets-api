@@ -15,7 +15,7 @@ class AuthorsController extends ApiController
      */
     public function index(AuthorFilter $filters)
     {
-        return UserResource::collection(User::filter($filters)->paginate()); // TODO: stopped at 2:03 in video
+        return UserResource::collection(User::filter($filters)->paginate());
     }
 
     /**
