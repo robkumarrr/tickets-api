@@ -11,6 +11,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Ticket extends Model
 {
+    protected $fillable = [
+        'title',
+        'description',
+        'status',
+        'user_id'
+    ];
+
     /** @use HasFactory<\Database\Factories\TicketFactory> */
     use HasFactory;
 
