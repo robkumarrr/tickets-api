@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Filters\V1\TicketFilter;
+use App\Http\Requests\Api\V1\ReplaceTicketRequest;
 use App\Http\Requests\Api\V1\StoreTicketRequest;
 use App\Http\Requests\Api\V1\UpdateTicketRequest;
 use App\Http\Resources\V1\TicketResource;
@@ -70,7 +71,12 @@ class TicketController extends ApiController
      */
     public function update(UpdateTicketRequest $request, Ticket $ticket)
     {
-        //
+        // PATCH (traditional update) or PUT (replacing)
+    }
+
+    public function replace(ReplaceTicketRequest $request, $ticket_id)
+    {
+
     }
 
     /**
