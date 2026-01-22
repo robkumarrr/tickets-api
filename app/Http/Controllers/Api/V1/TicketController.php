@@ -32,10 +32,6 @@ class TicketController extends ApiController
             return $this->ok('User not found', [
                 'error' => 'The provided user id does not exist.'
             ]);
-        } catch (\Exception $exception) {
-            return $this->ok('User not found', [
-               'error' => $exception->getMessage()
-            ]);
         }
 
         $model = [
@@ -76,7 +72,22 @@ class TicketController extends ApiController
 
     public function replace(ReplaceTicketRequest $request, $ticket_id)
     {
+        try {
+            $ticket = Ticket::findOrFail($ticket_id);
+        } catch (ModelNotFoundException $exception) {
+            return $this->error('Ticket cannot be found', 404);
+        }
 
+        $model = [
+            'title' => $request->input('data.attributes.title'),
+            'description' => $request->input('data.attributes.description'),
+            'status' => $request->input('data.attributes.status'),
+            'user_id' => $request->input('data.relationships.author.data.id')
+        ];
+
+        $ticket->update($model);
+
+        return new TicketResource($ticket);
     }
 
     /**
