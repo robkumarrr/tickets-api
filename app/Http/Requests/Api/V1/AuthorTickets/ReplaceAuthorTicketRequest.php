@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Http\Requests\Api\V1;
+namespace App\Http\Requests\Api\V1\AuthorTickets;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class UpdateTicketRequest extends FormRequest
+class ReplaceAuthorTicketRequest extends BaseAuthorTicketRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,12 +19,13 @@ class UpdateTicketRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'data.attributes.title' => ['sometimes', 'string'],
-            'data.attributes.description' => ['sometimes', 'string'],
-            'data.attributes.status' => ['sometimes', 'string', 'in:A,C,H,X'],
-            'data.relationships.author.data.id' => ['sometimes', 'integer']
+        $rules = [
+            'data.attributes.title' => ['required', 'string'],
+            'data.attributes.description' => ['required', 'string'],
+            'data.attributes.status' => ['required', 'string', 'in:A,C,H,X'],
         ];
+
+        return $rules;
     }
 
     public function messages(): array

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Filters\V1\TicketFilter;
-use App\Http\Requests\Api\V1\ReplaceAuthorTicketRequest;
-use App\Http\Requests\Api\V1\StoreTicketRequest;
+use App\Http\Requests\Api\V1\AuthorTickets\ReplaceAuthorTicketRequest;
+use App\Http\Requests\Api\V1\AuthorTickets\StoreAuthorTicketRequest;
 use App\Http\Resources\V1\TicketResource;
 use App\Models\Ticket;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -21,7 +21,7 @@ class AuthorTicketsController extends ApiController
         );
     }
 
-    public function store($author_id, StoreTicketRequest $request)
+    public function store($author_id, StoreAuthorTicketRequest $request)
     {
         $model = [
             'title' => $request->input('data.attributes.title'),

@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Http\Requests\Api\V1;
+namespace App\Http\Requests\Api\V1\AuthorTickets;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class UpdateAuthorTicketRequest extends FormRequest
+class UpdateAuthorTicketRequest extends BaseAuthorTicketRequest
 {
     /**
      * Determine if the user is authorized to make this request.
