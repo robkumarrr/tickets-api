@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Filters\V1\TicketFilter;
 use App\Http\Requests\Api\V1\AuthorTickets\ReplaceAuthorTicketRequest;
 use App\Http\Requests\Api\V1\AuthorTickets\StoreAuthorTicketRequest;
+use App\Http\Requests\Api\V1\AuthorTickets\UpdateAuthorTicketRequest;
 use App\Http\Resources\V1\TicketResource;
 use App\Models\Ticket;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -33,21 +34,13 @@ class AuthorTicketsController extends ApiController
         return new TicketResource(Ticket::create($model));
     }
 
-    public function update(ReplaceAuthorTicketRequest $request, $author_id, $ticket_id)
+    public function update(UpdateAuthorTicketRequest $request, $author_id, $ticket_id)
     {
         try {
             $ticket = Ticket::findOrFail($ticket_id);
 
-            if ($ticket->user_id == $author_id){
-                $model = [
-                    'title' => $request->input('data.attributes.title'),
-                    'description' => $request->input('data.attributes.description'),
-                    'status' => $request->input('data.attributes.status'),
-                    'user_id' => $author_id
-                ];
-
-                $ticket->update($model);
-
+            if ($ticket->user_id == $author_id) {
+                $ticket->update($request->mappedAttributes());
                 return new TicketResource($ticket);
             }
 
@@ -63,15 +56,7 @@ class AuthorTicketsController extends ApiController
             $ticket = Ticket::findOrFail($ticket_id);
 
             if ($ticket->user_id == $author_id){
-                $model = [
-                    'title' => $request->input('data.attributes.title'),
-                    'description' => $request->input('data.attributes.description'),
-                    'status' => $request->input('data.attributes.status'),
-                    'user_id' => $author_id
-                ];
-
-                $ticket->update($model);
-
+                $ticket->update($request->mappedAttributes());
                 return new TicketResource($ticket);
             }
 
