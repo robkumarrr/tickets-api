@@ -15,7 +15,7 @@ class TicketPolicy
         //
     }
 
-    public function update(User $user, Ticket $ticket)
+    public function update(User $user, Ticket $ticket): bool
     {
         return $user->id === $ticket->user_id;
     }
