@@ -22,9 +22,4 @@ class ApiController extends Controller
 
         return in_array(strtolower($relationship), $includeValues);
     }
-
-    public function isAble($ability, $targetModel)
-    {
-        return $this->authorize($ability, [$targetModel, $this->policyClass]);
-    }
 }
