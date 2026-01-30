@@ -33,6 +33,7 @@ final class Abilities {
             ];
         } else {
             return [
+                self::CreateTicket,
                 self::UpdateOwnTicket,
                 self::DeleteOwnTicket
             ];
