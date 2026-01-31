@@ -21,5 +21,12 @@ class DatabaseSeeder extends Seeder
         Ticket::factory(100)
             ->recycle($users)
             ->create();
+
+        User::create([
+            'name' => 'Test Example',
+            'email' => 'test@example.com',
+            'password' => 'password',
+            'is_manager' => true
+        ]);
     }
 }
