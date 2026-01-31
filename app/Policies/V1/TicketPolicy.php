@@ -16,7 +16,7 @@ class TicketPolicy
         //
     }
 
-    public function store(User $user): bool
+    public function create(User $user): bool
     {
         if (!$user->tokenCan(Abilities::CreateTicket)) {
             return false;

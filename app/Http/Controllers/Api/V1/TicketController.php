@@ -35,9 +35,11 @@ class TicketController extends ApiController
         $author_id = $request->input('data.relationships.author.data.id');
         try {
             $user = User::findOrFail($author_id);
-            Gate::authorize('store', $user);
+            Gate::authorize('create', $user);
         } catch (ModelNotFoundException $exception) {
-            Log::error('User cannot be found for ID: ' . $author_id);
+            Log::error('User cannot be found for ID: ' . $author_id, [
+                'Exception: ' => $exception->getMessage()
+            ]);
             return $this->ok('User cannot be found for ID: ' . $author_id, [
                 'error' => 'The provided user id does not exist.'
             ]);
