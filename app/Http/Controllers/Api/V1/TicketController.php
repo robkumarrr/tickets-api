@@ -13,6 +13,7 @@ use App\Policies\V1\TicketPolicy;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 
 class TicketController extends ApiController
 {
@@ -31,10 +32,13 @@ class TicketController extends ApiController
      */
     public function store(StoreTicketRequest $request)
     {
+        $author_id = $request->input('data.relationships.author.data.id');
         try {
-            $user = User::findOrFail($request->input('data.relationships.author.data.id'));
+            $user = User::findOrFail($author_id);
+            Gate::authorize('store', $user);
         } catch (ModelNotFoundException $exception) {
-            return $this->ok('User not found', [
+            Log::error('User cannot be found for ID: ' . $author_id);
+            return $this->ok('User cannot be found for ID: ' . $author_id, [
                 'error' => 'The provided user id does not exist.'
             ]);
         }
@@ -71,8 +75,13 @@ class TicketController extends ApiController
             Gate::authorize('update', $ticket);
 
         } catch (ModelNotFoundException $exception) {
-            return $this->error('Ticket cannot be found', 404);
+            Log::error('Ticket cannot be found.', ['ticket' => $ticket_id]);
+            return $this->error('Ticket cannot be found.', 404);
         } catch (AuthorizationException $exception) {
+            Log::error('You are not authorized to update this ticket.', [
+                'ticket' => $ticket_id,
+                'user' => $request->user()
+            ]);
             return $this->error('You are not authorized to update this ticket.', 403);
         }
 
@@ -85,6 +94,7 @@ class TicketController extends ApiController
     {
         try {
             $ticket = Ticket::findOrFail($ticket_id);
+            Gate::authorize('replace', $ticket);
         } catch (ModelNotFoundException $exception) {
             return $this->error('Ticket cannot be found', 404);
         }
@@ -101,6 +111,7 @@ class TicketController extends ApiController
     {
         try {
             $ticket = Ticket::findOrFail($ticket_id);
+            Gate::authorize('destroy', $ticket);
             $ticket->delete();
 
             return $this->ok('Ticket successfully deleted.', [
