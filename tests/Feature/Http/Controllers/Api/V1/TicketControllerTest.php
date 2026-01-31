@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Response;
 use Laravel\Sanctum\Sanctum;
 
@@ -83,3 +84,28 @@ it('unauthorized user cannot create ticket for another user', function() {
 
     $response->assertStatus(403);
 });
+
+it('throws an exception if the user cannot be found', function() {
+//    User::factory()->count(1)->create();
+//
+//    $author_id = 999;
+//    User::findOrFail($author_id);
+
+    $response = $this->postJson(route('tickets.store'), [
+        "data"=> [
+            "attributes"=> [
+                "title"=> "Second Ticket",
+                "description"=> "This is the second ticket we created",
+                "status"=> "C"
+            ],
+            "relationships"=> [
+                "author"=> [
+                    "data"=> [
+                        "id" => 999
+                    ]
+                ]
+            ]
+        ]
+    ]);
+
+})->throws(ModelNotFoundException::class);
